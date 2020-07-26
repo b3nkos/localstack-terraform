@@ -1,0 +1,25 @@
+version: "3"
+services:
+  localstack:
+    image: localstack/localstack:0.11.3
+    ports:
+      - "4566-4599:4566-4599"
+      - "9000:9000"
+    environment:
+      - IMAGE_NAME=localstack/localstack:0.11.3
+      - SERVICES=sqs,s3,kms,ec2,sts
+      - DEBUG=0
+      - DATA_DIR=/tmp/localstack
+      - PORT_WEB_UI=9000
+      - LAMBDA_EXECUTOR=local
+      - KINESIS_ERROR_PROBABILITY=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - HOST_TMP_FOLDER=/tmp/localstack
+      - DEFAULT_REGION=us-east-1
+      - START_WEB=1
+    volumes:
+      - "data-localstack:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+volumes:
+  data-localstack:
